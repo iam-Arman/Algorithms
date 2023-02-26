@@ -60,7 +60,7 @@ freopen("output.txt", "w", stdout);
 /// then we have to sort the pair according to the array ///
 /// then we have to count the number of swap to make make the pair index equal to the initaial index ///
 /// for example if we have a pair of (2,3 is index)  and our current index is 0 then we have to swap this pair with the pair of index 3  then the pair at index 3 will come to index 0 the we will have to check if the index of the pair is 0 or not if not we will have to do the same step again suppose now we have a pair (2,2) that means we have to swap this pair will the pair at index 2 then again have to cheek if the 0 indexed pair is now at position or not if not do the same steps again and again
-/// time complexity is O(n^2)
+/// time complexity is O(n*logn)
 
 void solve()
 {
