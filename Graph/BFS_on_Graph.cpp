@@ -1,6 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+vector<bool> vis(1000,0);
+vector<int> bf;
+void bfs(vector<int> graph[],int parent)
+{
+    queue<int> store;
+    store.push(parent);
+    vis[parent]=1;
+    bf.push_back(parent);
+    while(!store.empty())
+    {
+        int top=store.front();
+        store.pop();
+        vis[top]=1;
+        for(int i=0;i<graph[top].size();i++)
+        {
+            if(vis[graph[top][i]]) continue;
+            bf.push_back(graph[top][i]);
+            store.push(graph[top][i]);
+            vis[graph[top][i]]=1;
+        }
+    }
+}
+
+
+
 int main()
 {
     int vertice,edge;
@@ -16,39 +41,17 @@ int main()
         graph[y].push_back(x); // if non directed graph;
     }
 
-    int parent=0;
-    //cin>>parent;
+    int parent=1;
+    cin>>parent;// if parent is not fixed every time
 
-    bool vis[vertice+1];
+    bfs(graph,parent);
 
-    vector<int> bfs;
-
-    queue<int> store;
-
-    store.push(parent);
-
-    bfs.push_back(parent);
-
-    while(!store.empty())
+    for(auto it : bf)
     {
-        int top=store.front();
-        store.pop();
-        vis[top]=1;
-        for(int i=0;i<graph[top].size();i++)
-        {
-            if(vis[graph[top][i]]) continue;
-            store.push(graph[top][i]);
-            bfs.push_back(graph[top][i]);
-            vis[graph[top][i]]=1;
-        }
-
-    }
-
-    for(auto x: bfs)
-    {
-        cout<<x<<' ';
+        cout<<it<<' ';
     }
     cout<<endl;
+
    
 
     
