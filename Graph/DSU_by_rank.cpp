@@ -15,11 +15,6 @@ using namespace __gnu_pbds;
 
 //---------------------------------------------------------------------------------------------------------------------------------|
 
-typedef     vector<int> vii;
-typedef     vector<long long> vll;
-typedef     vector<pair<int,int> > vpi;
-typedef     vector<pair<long long,long long > > vpl;
-
 # define    el '\n'
 # define    ff first
 # define    ss second
@@ -52,19 +47,6 @@ const double eps=1e-9;
 # define fraction(a) cout.unsetf(ios::floatfield); cout.precision(a); cout.setf(ios::fixed,ios::floatfield);
 # define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
 
-// find_by_order() - Returns an iterator to the k-th largest element (counting from zero)
-// order_of_key()  - The number of items in a set that are strictly smaller than our item 
-// greater instead of less for descending order
-// less_equal works as ordered multiset
-// we can use pair<int,int> instead of int for pair of orderd set
-// for multiset st.lower_bound(x) works as upper bound and st.upper_bound(x) works as lower bound
-
-
-typedef vector<int>::iterator vit;
-typedef vector<ll>::iterator vlt;
-typedef set<int>::iterator sit;
-typedef map<int,int>::iterator mit;
-
 
 inline void file() {
  
@@ -78,56 +60,6 @@ freopen("output.txt", "w", stdout);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------|
-
-
-
-                                                   // DEBUGGER //
-
-
-//-----------------------------------------------------------------------------------------------------------------------------------|
-
-template < typename F, typename S > ostream& operator << ( ostream& os, const pair< F, S > & p ) { return os << "(" << p.first << ", " << p.second << ")"; }
- 
-template < typename T > ostream &operator << ( ostream & os, const vector< T > &v ) { os << "{"; for(auto it = v.begin(); it != v.end(); ++it) { if( it != v.begin() ) os << ", ";  os << *it; }  return os << "}";  }
- 
-template < typename T >  ostream &operator << ( ostream & os, const set< T > &v ) { os << "["; for(auto it = v.begin(); it != v.end(); ++it) { if( it != v.begin() ) os << ", "; os << *it;  } return os << "]"; }
- 
-template < typename T > ostream &operator << ( ostream & os, const multiset< T > &v ) { os << "["; for(auto it = v.begin(); it != v.end(); ++it) { if( it != v.begin() ) os << ", "; os << *it; } return os << "]"; }
- 
-template < typename F, typename S > ostream &operator << ( ostream & os, const map< F, S > &v ) { os << "["; for(auto it = v.begin(); it != v.end(); ++it) { if( it != v.begin() ) os << ", "; os << it -> first << " = " << it -> second ; } return os << "]";  }
- 
-#define dbg(args...) do {cerr << #args << " : "; faltu(args); } while(0)
- 
-void faltu () { cerr << endl; }
- 
-template <typename T> void faltu( T a[], int n ) {   for(int i = 0; i < n; ++i) cerr << a[i] << ' '; cerr << endl;  }
- 
-template <typename T, typename ... hello>  void faltu( T arg, const hello &... rest) {   cerr << arg << ' ';  faltu(rest...);  }
-
-//--------------------------------------------------------------------------------------------------------------------------------------|
-
-
-
-
-                                                    /////    FUNCTIONS     /////
-
-
-
-ll bigmod(ll base,ll power){ ll res=1; ll p=base%mod; while(power>0) { if(power%2==1) {  res=((res%mod)*(p%mod))%mod; }  power/=2; p=((p%mod)*(p%mod))%mod; } return res; }
-
-ll inversemod(ll base) { return bigmod(base,mod-2); }
-
-ll poww(ll a,ll b) { ll ans=1; if(!b) return 1; while(b>1) {  if(b&1) { ans=ans*a%mod; } a=a*a%mod; b/=2; }return a*ans%mod; }
-
-int gcd(ll a,ll b) { ll rem; while(b%a!=0)  {  rem=b%a;  b=a;  a=rem; } return a; }
-
-
-int dx[]={-1, 1 , 0 , 0 , -1 ,-1, 1, 1};
-int dy[]={ 0, 0 ,-1 , 1 , -1 , 1,-1, 1};
-
-// up = { -1,0 } , down = { 1,0 } , right = { 0,1 } , left = { 0,-1 }
-// up-right = { -1,1 } , up-left = { -1,-1 } , down-right = { 1,1 } , down-left = { 1,-1 }
-
 
 
 
