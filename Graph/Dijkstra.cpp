@@ -42,7 +42,7 @@ void dijkstra(int &source,int &destination,vector<array<long long,2> > graph[])
 
     if(dist[destination]==LONG_LONG_MAX)
     {
-        cout<<"-1"<<endl;
+        cout<<"NOT POSSIBLE"<<endl;
         return;
     }
 
