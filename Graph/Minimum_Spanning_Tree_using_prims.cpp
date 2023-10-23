@@ -4,14 +4,13 @@ using namespace std;
 
 // 0 based indexing
 int mstsum=0;
-vector<array<int,2> > mst(vector<array<int,2> > vec[])
+vector<array<int,2> > mst(vector<array<int,2> > vec[],int n)
 {
-    int n=vec->size();
     vector<array<int,2> > ans;
 
     priority_queue<array<int,3>,vector<array<int,3> >,greater<array<int,3> > > pq;
 
-    vector<bool> vis(n,false);
+    vector<bool> vis(n+1,false);
 
     pq.push({0,0,-1});
 
@@ -59,7 +58,7 @@ int main()
     int node,edge;
     cin>>node>>edge;
 
-    vector<array<int,2> > ans[node];
+    vector<array<int,2> > ans[node+1];
     for(int i=0;i<edge;i++)
     {
         int u,v,w;
@@ -69,7 +68,7 @@ int main()
         
     }
 
-    vector<array<int,2> > res=mst(ans);
+    vector<array<int,2> > res=mst(ans,node);
 
     cout<<"MST sum : "<<mstsum<<endl;
 
