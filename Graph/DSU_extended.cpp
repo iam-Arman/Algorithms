@@ -5,6 +5,7 @@ using namespace std;
 class dsu
 {
     vector<int> parent,size,mx,mn;
+    int comp;
 public:
     dsu(int n)
     {
@@ -15,6 +16,7 @@ public:
         iota(all(parent),0);
         iota(all(mx),0);
         iota(all(mn),0);
+        comp=n;
     }
 
     int findpar(int node)
@@ -45,7 +47,7 @@ public:
               mx[pv]=max(mx[pu],mx[pv]);
               mn[pv]=min(mn[pu],mn[pv]);
        }
-
+        comp--;
 
     }
 
@@ -63,6 +65,21 @@ public:
     {
         return mn[findpar(node)];
     }
+
+    int getcomp()
+    {
+        return comp;
+    }
+
+    void clear()
+    {
+        iota(all(parent),0);
+        iota(all(mx),0);
+        iota(all(mn),0);
+        size.resize(size.size(),1);
+        comp=size.size()-1;
+    };
+
 
 };
 int main()
