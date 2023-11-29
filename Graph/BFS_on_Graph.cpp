@@ -13,7 +13,6 @@ void bfs(vector<int> graph[],int parent)
     {
         int top=store.front();
         store.pop();
-        vis[top]=1;
         for(int i=0;i<graph[top].size();i++)
         {
             if(vis[graph[top][i]]) continue;
