@@ -20,6 +20,7 @@ bool bellman_ford(vector<array<ll,2> > graph[],int nodes,int edges,int src,int d
 {
   
    dis[src]=0; // distance of source node is 0
+  
    
    vector<int> par(nodes+1,-1); 
 
@@ -59,7 +60,6 @@ bool bellman_ford(vector<array<ll,2> > graph[],int nodes,int edges,int src,int d
                      neg=v;
                      par[v]=u;
                      found=true;
-                      break;
                 }
           
           }
@@ -67,17 +67,20 @@ bool bellman_ford(vector<array<ll,2> > graph[],int nodes,int edges,int src,int d
 
     if(found)  // if negative cycle found then backtrack to find negative cycle
     {
-        for(int i=1;i<=nodes;i++)
+        for(int i=1;i<nodes;i++)
         {
             neg=par[neg];
         }
 
-        for(int curr=neg;curr!=neg or complete[curr]==0;curr=par[curr])
-        {
-            negative_cycle.push_back(curr);
-            complete[curr]=1;
-        }
         negative_cycle.push_back(neg);
+        int cur=neg;
+        while(par[neg]!=cur)
+        {
+            negative_cycle.push_back(par[neg]);
+            neg=par[neg];
+        }
+        negative_cycle.push_back(cur);
+
         reverse(negative_cycle.begin(),negative_cycle.end());
         
 
@@ -105,6 +108,7 @@ int main()
     cin>>nodes>>edges;
 
     vector<array<ll,2> > graph[nodes+1];
+
 
     for(int i=0;i<edges;i++)
     {
