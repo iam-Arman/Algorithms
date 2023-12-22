@@ -8,7 +8,7 @@ class SparseTable
 
     SparseTable(int n,vector<int> &vec)
     {
-        st.resize(n+1,vector<int> (__lg(n)+2));
+        st.resize(n+2,vector<int> (__lg(n)+2));
 
         for(int i=0;i<n;i++)  // 0 based for 1 based do i=1 to n
         {
