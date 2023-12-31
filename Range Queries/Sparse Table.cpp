@@ -33,6 +33,20 @@ class SparseTable
         return min(st[l][j],st[r-(1<<j)+1][j]);
     }
 
+    int query1(int l,int r) // query in logn for non idempotent function
+    {
+        int ans=INT_MAX;
+        for(int j=__lg(r-l+1);j>=0;j--) 
+        {
+            if((1<<j)<=(r-l+1))
+            {
+                ans=min(ans,st[l][j]);
+                l+=(1<<j);
+            }
+        }
+        return ans;
+    }
+
     
 };
 
