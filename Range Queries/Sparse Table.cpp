@@ -1,16 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+template <typename T>
 class SparseTable
 {
     public:
-    vector<vector<int> > st;
+    vector<vector<T> > st;
 
-    SparseTable(int n,vector<int> &vec)
+    T op(T a,T b)
+    {
+        return __gcd(a,b);
+    }
+
+    SparseTable(int n,vector<T> &vec)
     {
         st.resize(n+2,vector<int> (__lg(n)+2));
 
-        for(int i=0;i<n;i++)  // 0 based for 1 based do i=1 to n
+        for(int i=1;i<=n;i++)  
         {
             st[i][0]=vec[i];
         }
@@ -19,28 +25,28 @@ class SparseTable
 
         for(int j=1;j<=k;j++)
         {
-            for(int i=0;i+(1<<j)<=n;i++) // 0 based for 1 based do i=1 to n+1
+            for(int i=0;i+(1<<j)<=n+1;i++) 
             {
-                st[i][j]=min(st[i][j-1],st[i+(1<<(j-1))][j-1]);  // instead of min we can use max , gcd, lcm , or , and 
+                st[i][j]=op(st[i][j-1],st[i+(1<<(j-1))][j-1]); 
             }
         }
 
     }
 
-    int query(int l,int r)
+    T query(int l,int r)
     {
         int j=__lg(r-l+1);
-        return min(st[l][j],st[r-(1<<j)+1][j]);
+        return op(st[l][j],st[r-(1<<j)+1][j]);
     }
 
-    int query1(int l,int r) // query in logn for non idempotent function
+    T query1(int l,int r) // query in logn for non idempotent function
     {
-        int ans=INT_MAX;
+        int ans=0;
         for(int j=__lg(r-l+1);j>=0;j--) 
         {
             if((1<<j)<=(r-l+1))
             {
-                ans=min(ans,st[l][j]);
+                ans=op(ans,st[l][j]);
                 l+=(1<<j);
             }
         }
