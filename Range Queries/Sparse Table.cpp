@@ -25,7 +25,7 @@ class SparseTable
 
         for(int j=1;j<=k;j++)
         {
-            for(int i=0;i+(1<<j)<=n+1;i++) 
+            for(int i=1;i+(1<<j)<=n+1;i++) 
             {
                 st[i][j]=op(st[i][j-1],st[i+(1<<(j-1))][j-1]); 
             }
