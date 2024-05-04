@@ -1,24 +1,20 @@
+constexpr ll mod=1000012253;
 template<typename T>
 class Hashing {
 private:
     int n;
     string s;
-    string rev;
-    vector<int> bases = { 37, 44, 53, 67, 72, 77,
-                          84, 96, 111, 124, 143,
-                          164, 145, 167, 170, 175,
-                          184, 199, 203, 222};
-
-    vector<int> mods =  {1000000007, 1000000009, 1000000433, 1000001329, 1000001927,
-                         1000003051, 1000003253, 1000003397, 1000003579, 1000003751,
-                         1000003793, 1000002043, 1000003967, 1000003987, 1000004123,
-                         1000004843, 1000006129, 1000006961, 1000012253, 1000015271};
     T base;
-    T mod;
+    string rev;
     vector<T> prefix_hash;
     vector<T> suffix_hash;
     vector<T> power;
     vector<T> inv;
+
+    vector<int> bases = {37,61,79,83,97,53,61,
+                         107,127,137,163,191 ,
+                         199,211,229,239,263 ,
+                         271,281,293};
 
     T rng() {
         std::random_device rd;
@@ -39,15 +35,24 @@ private:
         return ((a % mod) - (b % mod) + 2LL * mod) % mod;
     }
 
+    T bigmod(T base, T power, T mod) {
+        T res = 1;
+        while (power > 0) {
+            if (power & 1) {
+                res = mul(res, base, mod);
+            }
+            base = mul(base, base, mod);
+            power >>= 1;
+        }
+        return res;
+    }
+
 public:
     Hashing(const std::string& str) : s(str) {
         n = s.size();
         rev = s;
         reverse(all(rev));
-
-
         base = bases[rng() % bases.size()];
-        mod = mods[rng() % mods.size()];
         prefix_hash.resize(n + 1, 0);
         suffix_hash.resize(n + 1, 0);
         power.resize(n + 1, 0);
