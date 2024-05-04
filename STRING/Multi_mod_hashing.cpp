@@ -1,13 +1,15 @@
-
+// constexpr int mod1 = 1000000007;
+// constexpr int mod2 = 1000000009;
 template<typename T>
 class MultiHashing {
 private:
     int n;
     string s;
-    vector<int> bases = {37, 44, 53, 67, 72, 77,
-                         84, 96, 111, 124, 143,
-                         164, 145, 167, 170, 175,
-                         184, 199, 203, 222};
+    string rev;
+    vector<int> bases = {37,61,79,83,97,53,61,
+                         107,127,137,163,191 ,
+                         199,211,229,239,263 ,
+                         271,281,293 };
                          
     vector<int> mods = {1000000007, 1000000009, 1000000433, 1000001329, 1000001927,
                        1000003051, 1000003253, 1000003397, 1000003579, 1000003751,
@@ -19,6 +21,7 @@ private:
     T mod1;
     T mod2;
     vector<pair<T, T>> prefix_hash;
+    vector<pair<T, T>> suffix_hash;
     vector<pair<T, T>> power;
     vector<pair<T, T>> inv;
 
@@ -40,6 +43,18 @@ private:
 
     T sub(T a, T b, T mod) {
         return ((a % mod) - (b % mod) + 2LL * mod) % mod;
+    }
+
+    T bigmod(T base, T power, T mod) {
+        T res = 1;
+        while (power > 0) {
+            if (power & 1) {
+                res = mul(res, base, mod);
+            }
+            base = mul(base, base, mod);
+            power >>= 1;
+        }
+        return res;
     }
 
 public:
@@ -74,6 +89,7 @@ public:
             int ch = s[i - 1] - 'a' + 1;
             prefix_hash[i].first = add(prefix_hash[i - 1].first, mul(ch, power[i - 1].first, mod1), mod1);
             prefix_hash[i].second = add(prefix_hash[i - 1].second, mul(ch, power[i - 1].second, mod2), mod2);
+
         }
     }
 
@@ -87,4 +103,3 @@ public:
         return {val1, val2};
     }
 };
-
