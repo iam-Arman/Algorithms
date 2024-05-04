@@ -15,9 +15,9 @@ private:
                          1000004843, 1000006129, 1000006961, 1000012253, 1000015271};
     T base;
     T mod;
-    std::vector<T> prefix_hash;
-    std::vector<T> power;
-    std::vector<T> inv;
+    vector<T> prefix_hash;
+    vector<T> power;
+    vector<T> inv;
 
     T rng() {
         std::random_device rd;
