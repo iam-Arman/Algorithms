@@ -1,6 +1,5 @@
-
-constexpr int mod1 = 1000012253;
-constexpr int mod2 = 1000000009;
+/ constexpr int mod1 = 1000012253;
+// constexpr int mod2 = 1000000009;
 template<typename T>
 class MultiHashing {
 public:
@@ -19,8 +18,8 @@ public:
 
     T base1;
     T base2;
-    // T mod1;
-    // T mod2;
+    T mod1;
+    T mod2;
     vector<pair<T, T>> prefix_hash;
     vector<pair<T, T>> suffix_hash;
     vector<pair<T, T>> power;
@@ -60,12 +59,12 @@ public:
 
     MultiHashing(const string& str) : s(str) {
         n = s.size();
-        base1 = 83;
-        base2 = 97;
+        base1 = bases[rng() % bases.size()];
+        base2 = bases[rng() % bases.size()];
         rev = s;
         reverse(rev.begin(), rev.end());
-        // mod1 = mods[rng() % mods.size()];
-        // mod2 = mods[rng() % mods.size()];
+        mod1 = mods[rng() % mods.size()];
+        mod2 = mods[rng() % mods.size()];
         prefix_hash.resize(n + 1, {0, 0});
         suffix_hash.resize(n + 1, {0, 0});
         power.resize(n + 1, {0, 0});
@@ -142,4 +141,5 @@ public:
         return {val1, val2};
     }
 };
+
 
