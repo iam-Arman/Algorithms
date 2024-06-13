@@ -79,4 +79,7 @@ public:
         val = mul(val, inv[l], mod);
         return val;
     }
+    T combine(T hash1, T hash2, int len1) {
+        return add(mul(hash1, power[len1], mod), hash2, mod);
+    }
 };
