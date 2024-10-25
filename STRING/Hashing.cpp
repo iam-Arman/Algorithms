@@ -79,6 +79,29 @@ public:
         val = mul(val, inv[l], mod);
         return val;
     }
+
+    T get_new_hash(string &s)
+    {
+        T val=0;
+        for(int i=0;i<s.size();i++)
+        {
+            int ch=s[i]-'a'+1;
+            val=add(val,mul(ch,power[i],mod),mod);
+        }
+        val=mul(val,inv[1],mod);
+        return val;
+    }
+
+    void get_new_hash_string(string &s)
+    {
+        int n=s.size();
+        prefix_hash[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            int ch = s[i - 1] - 'a' + 1;
+            prefix_hash[i] = (1LL * prefix_hash[i - 1] + mul(ch, power[i - 1], mod)) % mod;
+        }
+    }
+
     T combine(T hash1, T hash2, int len1) {
         return add(mul(hash1, power[len1], mod), hash2, mod);
     }
