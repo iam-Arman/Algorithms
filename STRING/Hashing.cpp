@@ -1,4 +1,4 @@
-constexpr ll mod=1000012253;
+constexpr ll mod=998244353;
 template<typename T>
 class Hashing {
 private:
@@ -92,9 +92,10 @@ public:
         return val;
     }
 
-    void get_new_hash_string(string &s)
+    void change_current_hash(string &s)
     {
-        int n=s.size();
+        this->s=s;
+        n=s.size();
         prefix_hash[0] = 0;
         for (int i = 1; i <= n; i++) {
             int ch = s[i - 1] - 'a' + 1;
@@ -102,7 +103,39 @@ public:
         }
     }
 
-    T combine(T hash1, T hash2, int len1) {
-        return add(mul(hash1, power[len1], mod), hash2, mod);
+    T combine(T hash1, T hash2, int len1) 
+    {
+        return add(hash1, mul(hash2, power[len1], mod), mod);
     }
+
+    T get_modified_hash_changed_at_ith_index(int i,char ch)
+    {
+        T first=0;
+        if(i>1)
+        {
+            first=get_hash(1,i-1);
+        }
+        
+        T second=0;
+        if(i<n)
+        {
+            second=get_hash(i+1,n);
+        }
+
+        int chh=ch-'a'+1;
+        int pos=max(0,i-2);
+        
+        first = add(first, mul(chh, power[pos], mod), mod);
+
+        if(i==1)
+        {
+            first=mul(first,inv[i], mod);
+        }
+       
+        T p=combine(first,second,i);
+
+       return p;
+    } 
+
+    
 };
