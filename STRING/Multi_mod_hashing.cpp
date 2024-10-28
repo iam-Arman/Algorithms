@@ -1,5 +1,5 @@
-// constexpr int mod1 = 1000000007;
-// constexpr int mod2 = 1000000009;
+constexpr int mod1 = 1000000007;
+constexpr int mod2 = 1000000009;
 template<typename T>
 class MultiHashing {
 private:
@@ -18,10 +18,9 @@ private:
 
     T base1;
     T base2;
-    T mod1;
-    T mod2;
+    // T mod1;
+    // T mod2;
     vector<pair<T, T>> prefix_hash;
-    vector<pair<T, T>> suffix_hash;
     vector<pair<T, T>> power;
     vector<pair<T, T>> inv;
 
@@ -62,8 +61,8 @@ public:
         n = s.size();
         base1 = bases[rng() % bases.size()];
         base2 = bases[rng() % bases.size()];
-        mod1 = mods[rng() % mods.size()];
-        mod2 = mods[rng() % mods.size()];
+        // mod1 = mods[rng() % mods.size()];
+        // mod2 = mods[rng() % mods.size()];
         prefix_hash.resize(n + 1, {0, 0});
         power.resize(n + 1, {0, 0});
         inv.resize(n + 1, {0, 0});
@@ -102,4 +101,77 @@ public:
 
         return {val1, val2};
     }
+
+    void change_current_hash(string &s)
+    {
+        this->s=s;
+        n=s.size();
+        for(int i=1;i<=n;i++)
+        {
+            int ch=s[i-1]-'a'+1;
+            prefix_hash[i].first=add(prefix_hash[i-1].first,mul(ch,power[i-1].first,mod1),mod1);
+            prefix_hash[i].second=add(prefix_hash[i-1].second,mul(ch,power[i-1].second,mod2),mod2);
+        }
+    }
+
+    pair<T,T> get_new_hash(string &s)
+    {
+        int n=s.size();
+        T val1=0,val2=0;
+        for(int i=1;i<=n;i++)
+        {
+            int ch=s[i-1]-'a'+1;
+            val1=add(val1,mul(ch,power[i-1].first,mod1),mod1);
+            val2=add(val2,mul(ch,power[i-1].second,mod2),mod2);
+        }
+
+        val1=mul(val1,inv[1].first,mod1);
+        val2=mul(val2,inv[1].second,mod2);
+
+        return {val1,val2};
+    }
+
+    pair<T, T> combine_hash(pair<T, T> h1, pair<T, T> h2, int l1)
+    {
+        T val1 = add(h1.first, mul(h2.first, power[l1].first, mod1), mod1);
+        T val2 = add(h1.second, mul(h2.second, power[l1].second, mod2), mod2);
+        return {val1, val2};
+    }
+
+    pair<T,T> get_modified_hash_changed_at_ith_index(int i,char ch)
+    {
+        T firstf=0;
+        T firsts=0;
+        if(i>1)
+        {
+            pair<ll,ll> p=get_hash(1,i-1);
+            firstf=p.ff;
+            firsts=p.ss;
+        }
+        
+        T secondf=0;
+        T seconds=0;
+        if(i<n)
+        {
+            pair<ll,ll> p=get_hash(i+1,n);
+            secondf=p.ff;
+            seconds=p.ss;
+        }
+
+        int chh=ch-'a'+1;
+        int pos=max(0,i-2);
+        
+        firstf = add(firstf, mul(chh, power[pos].first, mod1), mod1);
+        firsts = add(firsts, mul(chh, power[pos].second, mod2), mod2); 
+
+        if(i==1)
+        {
+            firstf=mul(firstf, inv[i].first, mod1);
+            firsts=mul(firsts, inv[i].second, mod2);
+        }
+       
+       pair<T,T> p=combine_hash({firstf,firsts},{secondf,seconds},i);
+
+       return p;
+    } 
 };
