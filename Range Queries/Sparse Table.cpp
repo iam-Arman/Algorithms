@@ -14,7 +14,7 @@ class SparseTable
 
     SparseTable(int n,vector<T> &vec)
     {
-        st.resize(n+2,vector<int> (__lg(n)+2));
+        st.resize(n+2,vector<T> (__lg(n)+2));
 
         for(int i=1;i<=n;i++)  
         {
@@ -65,7 +65,7 @@ int main()
      vector<int> vec(n);
      for(int i=0;i<n;i++) cin>>vec[i];
 
-     SparseTable st(n,vec);
+     SparseTable<ll> st(n,vec);
 
      int q;
      cin>>q;
