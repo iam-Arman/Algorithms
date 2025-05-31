@@ -1,62 +1,28 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define ll long long
 
-const int N = 1e6 + 5;
-const int mod = 1e9 + 7;
+const int MAXN = 2e6 + 5;
 
-ll bigmod(ll base,ll power)
-{ 
-    ll res=1;
-    ll p=base%mod; 
-    while(power>0)
-    { 
-        if(power%2==1)
-        {  
-            res=((res%mod)*(p%mod))%mod; 
-        }  
-        power/=2; 
-        p=((p%mod)*(p%mod))%mod; 
-    }
-    return res;
-}
+vector<long long> fact(MAXN), inv_fact(MAXN);
 
-ll inversemod(ll base) 
-{ 
-    return bigmod(base,mod-2); 
-}
-
-long long fact[N];
-
-void factorial()
-{
+ void precompute() {
     fact[0] = 1;
-    for(int i = 1; i < N; i++)
-    {
-        fact[i] = fact[i - 1] * i;
-        fact[i] %= mod;
+    for(int i = 1; i < MAXN; ++i) {
+        fact[i] = fact[i-1] * i % MOD;
     }
+    mint cur=fact[MAXN-1];      
+    cur=cur.inv();    
+    inv_fact[MAXN-1]=cur.v;
+    for(int i = MAXN - 2; i >= 0; --i) {
+        inv_fact[i] = inv_fact[i+1] * (i+1) % MOD;
+    }
+ }
+
+long long nCr(int n, int r) {
+    if(r < 0 || r > n) return 0;
+    return fact[n] * inv_fact[r] % MOD * inv_fact[n - r] % MOD;
 }
 
-ll ncr(int n,int r)
-{
-    if(r>n) return 0;
-
-    ll ans=fact[n];
-    ll din=fact[r]*fact[n-r];
-    ans*=inversemod(din);
-    ans%=mod;
-
-    return ans;
-}
-
-int main()
-{
-    factorial();
-
-    int n,r;
-    cin>>n>>r;
-
-    cout<<ncr(n,r)<<endl;
+long long nPr(int n, int r) {
+    if (r < 0 || r > n) return 0;
+    return fact[n] * inv_fact[n - r] % MOD;
 }
 
