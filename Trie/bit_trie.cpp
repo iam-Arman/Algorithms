@@ -123,6 +123,10 @@ public:
         int ans=0;
         for(int i=31;i>=0;i--)
         {
+            if(curr==NULL)
+            {
+                break;
+            }
             int bity=(1&(y>>i));
             int bitk=(1&(k>>i));
             if(bity)
@@ -153,7 +157,7 @@ public:
                 else curr=curr->left;
             }
         }
-        ans+=curr->cnt;
+        if(curr!=NULL) ans+=curr->cnt;
 
         return ans;
     }
