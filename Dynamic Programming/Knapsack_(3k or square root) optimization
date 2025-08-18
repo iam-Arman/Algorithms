@@ -32,4 +32,4 @@
   
 
    };
-complexity is O(n*sqrt(n))
+complexity is O(n*sqrt(w))
