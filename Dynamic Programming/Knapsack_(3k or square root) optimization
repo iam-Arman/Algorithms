@@ -1,12 +1,5 @@
  function<ll(vector<int>&,int)> get=[&](vector<int>&v,int size)
    {
-       sort(allr(v));
-       if(v.size() and v[0]*2>=size)
-       {
-          return 1LL*v[0]*(size-v[0]);
-       }
-       size=0;
-       for(auto it : v) size+=it;
 
        Cool_Bitset dp(size+1);
        dp.set(0, 1);
