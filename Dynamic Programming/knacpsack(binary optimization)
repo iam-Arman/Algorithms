@@ -1,0 +1,21 @@
+function<ll(vector<int>&,int)> get=[&](vector<int>&v,int size)
+   {
+       Cool_Bitset dp(size+1);
+       dp.set(0, 1);
+      
+       map<int,int> mp;
+       for (int x : v) mp[x]++;
+ 
+       for(auto [w,cnt] : mp)
+       {
+           int cur=1;
+           while(cnt>0)
+           {
+               dp.left_shift(w*min(cnt,cur));
+               cnt-=cur;
+               cur*=2;
+           }
+       }
+
+ 
+   };
