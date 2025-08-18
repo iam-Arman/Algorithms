@@ -29,12 +29,6 @@
           dp.left_shift(it);
       }
 
-       ll ans=0;
-       for(int i=0;i<=size;i++)
-       {
-         if(dp.get(i)!=0) ans=max(ans,1LL*i*(size-i));
-       }
-
-       return ans;
+  
 
    };
