@@ -19,3 +19,25 @@ function<ll(vector<int>&,int)> get=[&](vector<int>&v,int size)
 
  
    };
+
+function<ll(vector<int>&,int)> get=[&](vector<int>&v,int size)
+{
+   map<int,int> mp;
+   for(auto it : vec) mp[it]++;
+   vector<int> dp(n+1,1e9);
+   dp[0]=0;
+   for(auto [w,cnt] : mp)
+   {
+         int cur=1;
+         while(cnt>0)
+         {
+            int use=min(cnt,cur);
+            for(int i=n;i>=w*use;i--)
+            {
+               dp[i]=min(dp[i],dp[i-w*use]+use);
+            }
+            cnt-=use;
+            cur*=2;
+         }
+   }
+};
