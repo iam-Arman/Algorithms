@@ -73,6 +73,13 @@ struct Cool_Bitset {
  
       _clean();
    }
+
+    int64_t count() const {
+        int64_t res = 0;
+        for (int i = 0; i < n; i++)
+            res += __builtin_popcountll(bits[i]);
+        return res;
+    }
  
    int64_t find_first() const {
       for (int i = 0; i < n; i++)
@@ -94,7 +101,6 @@ struct Cool_Bitset {
       return -1;
    }
 
-
    Cool_Bitset& operator&=(const Cool_Bitset &other) {
       assert(b == other.b);
  
@@ -103,4 +109,10 @@ struct Cool_Bitset {
  
       return *this;
    }
+
+   Cool_Bitset operator&(const Cool_Bitset &other) const {
+        Cool_Bitset res(b);
+        for (int i = 0; i < n; i++) res.bits[i] = bits[i] & other.bits[i];
+        return res;
+    }
 };
