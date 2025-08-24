@@ -1,0 +1,47 @@
+class DSU{
+    vector<gp_hash_table<int,int> > parent,sz;
+public:
+    DSU(int n)
+    {
+       parent.resize(n+1);
+       sz.resize(n+1);
+    }
+
+    int findUpar(int node,int col)
+    {
+        if(parent[col].find(node)==parent[col].end()) return -1;
+        if(node==parent[col][node])
+        {
+            return node;  
+        }
+
+        return parent[col][node]=findUpar(parent[col][node],col);  
+    }
+
+    void add(int u,int v,int col)
+    {
+        int ulpar_u=findUpar(u,col);  
+        int ulpar_v=findUpar(v,col);
+
+        if(ulpar_u==-1)
+        {
+           ulpar_u=u;
+           sz[col][u]=1;
+           parent[col][u]=u;
+        }
+        if(ulpar_v==-1)
+        {
+           ulpar_v=v;
+           sz[col][v]=1;
+           parent[col][v]=v;
+        }
+
+        if (ulpar_u == ulpar_v) return;
+
+        if(sz[col][ulpar_u]<sz[col][ulpar_v]) swap(ulpar_u,ulpar_v);
+        sz[col][ulpar_u]+=sz[col][ulpar_v];
+        parent[col][ulpar_v]=ulpar_u;
+
+    }
+
+};
