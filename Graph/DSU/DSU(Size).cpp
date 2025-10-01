@@ -1,63 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
 class DSU{
-    vector<int> parent,size;  // parent and size
-    int comp; // number of component
 public:
+    vector<int> parent,size;
+    vector<ll> mx;
+    int comp;
+
     DSU(int n)
     {
-        parent.resize(n+1,0); // resizing parent
-        size.resize(n+1,1); // resizing size
-        for(int i=0;i<=n;i++)
-        {
-            parent[i]=i;  // initializing parent of every node itself
+        parent.resize(n+1,0);
+        size.resize(n+1,0);
+        mx.resize(n+1,LLONG_MIN);
+        for(int i=0;i<=n;i++){
+            parent[i]=i;
+            size[i]=1;
         }
-        comp=n;  // initially number of component is n
+        comp=n;
     }
 
     int findUpar(int node)
     {
-        if(node==parent[node])
-        {
-            return node;  // if parent of that node it itself returns
-        }
-
-        return parent[node]=findUpar(parent[node]);  // compress the path makes ultimate parent as parent to every connected node was traverse during finding ultimate parent
+        if(node==parent[node]) return node;
+        return parent[node]=findUpar(parent[node]);
     }
 
     void unionBysize(int u,int v)
     {
-        int ulpar_u=findUpar(u);  // finding ultimate parent of u and v
+        int ulpar_u=findUpar(u);
         int ulpar_v=findUpar(v);
-
-        if(ulpar_u==ulpar_v)  // if both are in same componet then return
-        {
-            return;
-        }
-        if(size[ulpar_u]>=size[ulpar_v])  // if size of ultimate parent of u is greater than or equal to  v then make ultimate parent of v as u
-        {
-            parent[ulpar_v]=ulpar_u;
-            size[ulpar_u]+=size[ulpar_v];  // increase the size of ultimate parent of u by adding size of ultimate parent of v
-        }
-        else  // else make ultimate parent of u as v
-        {
-            parent[ulpar_u]=ulpar_v;
-            size[ulpar_v]+=size[ulpar_u];
-        }
-
-        comp--;  // decrease the number of component
-       
+        if(ulpar_u==ulpar_v) return;
+        if(size[ulpar_u] < size[ulpar_v]) swap(ulpar_u, ulpar_v);
+        parent[ulpar_v] = ulpar_u;
+        size[ulpar_u] += size[ulpar_v];
+        mx[ulpar_u] = max(mx[ulpar_u], mx[ulpar_v]);
+        comp--;
     }
 
-    int getComp()
+    ll get(int x)
     {
-        return comp;  // return number of component
+        return mx[findUpar(x)];
     }
-    
-
-    
-
 };
 void solve()
 {
