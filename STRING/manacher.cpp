@@ -8,6 +8,7 @@ vector<int> manacher(string s) {
     int n = t.size();
     vector<int> p(n,0);
     int l = 1, r = 1; 
+    
 
     for (int i = 1; i < n - 1; i++) {
         int i_mirror = l + (r - i);
