@@ -1,5 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
 
 class DSU{
     vector<int> parent,rank;
@@ -14,20 +12,20 @@ public:
         }
     }
 
-    int findUparent(int node)
+    int find(int node)
     {
         if(node==parent[node])
         {
             return node;
         }
 
-        return parent[node]=findUparent(parent[node]);
+        return parent[node]=find(parent[node]);
     }
 
-    void unionByrank(int u,int v)
+    void unite(int u,int v)
     {
-        int ulpar_u=findUparent(u);
-        int ulpar_v=findUparent(v);
+        int ulpar_u=find(u);
+        int ulpar_v=find(v);
 
         if(ulpar_u==ulpar_v)
         {
@@ -38,10 +36,10 @@ public:
             parent[ulpar_v]=ulpar_u;
             rank[ulpar_u]++;
         }
+
         else if(rank[ulpar_u]>rank[ulpar_v])
         {
             parent[ulpar_v]=ulpar_u;
-
         }
         else
         {
@@ -50,47 +48,3 @@ public:
     }
 
 };
-void solve()
-{
-   int n,m;
-   cin>>n>>m;
-   DSU dsu(n);
-
-   for(int i=0;i<m;i++)
-   {
-    int u,v;
-    cin>>u>>v;
-    dsu.unionByrank(u,v);
-   }
-
-   int q;
-   cin>>q;
-   while(q--)
-   {
-     int x,y;
-     cin>>x>>y;
-     if(dsu.findUparent(x)==dsu.findUparent(y))
-     {
-       cout<<"yes"<<endl;
-     }
-     else cout<<"no"<<endl;
-   }
-
-
- 
-
-}
-
-int main()
-{
- 
-    clock_t q= clock();
-
-   // test
-    { 
-      solve();
-    }
- 
-    cerr << "Run Time : " <<((double)(clock() - q) / CLOCKS_PER_SEC)<<endl;
-  
-}
